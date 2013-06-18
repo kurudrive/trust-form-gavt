@@ -10,9 +10,9 @@ jQuery(document).ready(function(){
 	var onClickItemKakunin = "_gaq.push(['_trackPageview', '" + pagetitle + "_confirm'])";
 	jQuery('div#trust-form.contact-form-input #confirm-button input').attr({ onClick:onClickItemKakunin});
 	//　送信ボタンにVPV　_sendを設定
-	var onClickItemSoushin = "_gaq.push(['_trackPageview', '" + url + "_send'])";
+	var onClickItemSoushin = "_gaq.push(['_trackPageview', '" + pagetitle + "_send'])";
 	jQuery('div#trust-form.contact-form-confirm #confirm-button input[name="send-to-finish"]').attr({ onClick:onClickItemSoushin});
 	//　戻るボタンにVPV　_returnを設定
-	var onClickItemModoru = "_gaq.push(['_trackPageview', '" + url + "_return'])";
+	var onClickItemModoru = "_gaq.push(['_trackPageview', '" + pagetitle + "_return'])";
 	jQuery('div#trust-form.contact-form-confirm #confirm-button input[name="return-to-input"]').attr({ onClick:onClickItemModoru});
 });
