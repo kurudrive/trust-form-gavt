@@ -5,37 +5,48 @@ Plugin URI:
 Description: Trust Form で確認画面への移動時、送信時のバーチャルページビューを取得出来るようになります。
 Author: Hidekazu　Ishikawa
 Author URI:
-Version: 1.1
+Version: 1.2
 */
 
 add_action( 'wp_footer', 'add_gavt' );
 function add_gavt() {
+	wp_register_script( 'gavtjs' , plugins_url().'/trust-form-gavt/trust-form-gavt.js', array('jquery'), '20130618b' );
 	wp_enqueue_script( 'jquery' );
-	// echo site_url()がjsファイルだと使えないので直書きに戻しました。
-	// wp_register_script( 'gavtjs' , plugins_url().'/trust-form-gavt/trust-form-gavt.js', array('jquery'), '20130618' );
-	// wp_enqueue_script( 'gavtjs' );
-	?>
-	<script language="JavaScript">
-	<!--
-	jQuery(document).ready(function(){
-		var pagetitle = jQuery("title").html();
-		// 今のURLを取得
-		var url = jQuery(location).attr('href');
-		// WordPressのサイトURLを取得
-		var siteurl = '<?php echo site_url(); ?>';
-		// 今のURLからWordPressのサイトURLを削除
-		url = url.replace(siteurl,'');
-		//　確認画面へのボタンにVPV　_confirmを設定
-		var onClickItemKakunin = "_gaq.push(['_trackPageview', '" + url + "_confirm'])";
-		jQuery('div#trust-form.contact-form-input #confirm-button input').attr({ onClick:onClickItemKakunin});
-		//　送信ボタンにVPV　_sendを設定
-		var onClickItemSoushin = "_gaq.push(['_trackPageview', '" + url + "_send'])";
-		jQuery('div#trust-form.contact-form-confirm #confirm-button input[name="send-to-finish"]').attr({ onClick:onClickItemSoushin});
-		//　戻るボタンにVPV　_returnを設定
-		var onClickItemModoru = "_gaq.push(['_trackPageview', '" + url + "_return'])";
-		jQuery('div#trust-form.contact-form-confirm #confirm-button input[name="return-to-input"]').attr({ onClick:onClickItemModoru});
-	});
-	-->
-	</script>
-	<?php
+	wp_enqueue_script( 'gavtjs' );
 }
+
+// 以下ショートコードがある場合だけ適応
+// add_action('wp_print_scripts', array(&$this,'addgavt'));
+// function addgavt() {
+// 	if (!hasShortCode('trust-form'))
+// 		return;
+// 	wp_register_script( 'gavtjs' , plugins_url().'/trust-form-gavt/trust-form-gavt.js', array('jquery'), '20130618' );
+// 	wp_enqueue_script( 'jquery' );
+// 	wp_enqueue_script( 'gavtjs' );
+// }
+
+// function hasShortcode($shortcode) {
+// 	global $wp_query;
+
+// 	$posts   = $wp_query->posts;
+// 	$pattern = '/\[' . preg_quote($shortcode) . '[^\]]*\]/im';
+// 	$found   = false;
+// 	// $hasTeaser = !( is_single() || is_page() );
+
+// 	foreach($posts as $post) {
+// 		if (isset($post->post_content)) {
+// 			$post_content = $post->post_content;
+// 			// if ( $hasTeaser && preg_match('/<!--more(.*?)?-->/', $post_content, $matches) ) {
+// 			// 	$content = explode($matches[0], $post_content, 2);
+// 			// 	$post_content = $content[0];
+// 			// }
+// 			if ( !empty($post_content) && preg_match($pattern, $post_content) ) {
+// 				$found = true;
+// 			}
+// 		}
+// 		if ( $found )
+// 			break;
+// 	}
+// 	unset($posts);
+// 	return $found;
+// }
